@@ -1,6 +1,6 @@
-package repository;
+package br.com.crud.usuarios.repository;
 
-import external.model.Usuario;
+import br.com.crud.usuarios.external.model.Usuario;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;

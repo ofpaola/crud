@@ -1,7 +1,6 @@
-package external.dto;
+package br.com.crud.usuarios.external.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,10 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class UsuarioDTO {
-
-    @NotBlank
     private String id;
     @NotBlank
     private String nome;
@@ -20,6 +16,13 @@ public class UsuarioDTO {
     private String email;
     @NotBlank
     private String documento;
+
+    public UsuarioDTO(String id, String nome, String email, String documento) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.documento = documento;
+    }
 
     public String getId() {
         return id;
