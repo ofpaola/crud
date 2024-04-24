@@ -6,8 +6,8 @@ import br.com.crud.usuarios.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,14 +21,17 @@ public class UsuarioUseCase {
     }
 
     public List<Usuario> findUsuario() {
-        return repository.findAll();
+        List<Usuario> usuarioList = new ArrayList<>();
+        try{
+            usuarioList = repository.findAll();
+        } catch(Exception e) {
+
+        }
+        return usuarioList;
     }
 
-    public Optional<Usuario> findUsuarioByDocumento(String documento) {
-        return repository.findByDocumento(documento);
+    public Usuario updateUsuario(UsuarioDTO usuarioDTO) {
+        Usuario user = new Usuario(usuarioDTO.getId(), usuarioDTO.getNome(), usuarioDTO.getEmail(), usuarioDTO.getDocumento());
+        return repository.save(user);
     }
-
-//    public Usuario updateUsuario(Usuario usuario) {
-//        return br.com.crud.usuarios.repository.save(usuario);
-//    }
 }

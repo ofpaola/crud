@@ -4,12 +4,15 @@ import br.com.crud.usuarios.external.dto.UsuarioDTO;
 import br.com.crud.usuarios.external.model.Usuario;
 import br.com.crud.usuarios.usecase.UsuarioUseCase;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,27 +21,19 @@ public class UsuarioController {
 
     private final UsuarioUseCase useCase;
 
-    @PostMapping
-    public ResponseEntity<UsuarioDTO> save(@RequestBody UsuarioDTO usuarioDTO){
-        Usuario usuario = useCase.saveUsuario(usuarioDTO);
-
-        if(usuario != null) {
-            return new ResponseEntity<>(new UsuarioDTO(usuarioDTO.getId(), usuarioDTO.getNome(), usuarioDTO.getEmail(), usuarioDTO.getDocumento()), HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    @PostMapping(value = "/cadastrar")
+    public ResponseEntity<Usuario> save(@RequestBody UsuarioDTO usuarioDTO){
+        return ResponseEntity.ok(useCase.saveUsuario(usuarioDTO));
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<UsuarioDTO>> find(){
-//        List<Usuario> usuarios = useCase.findUsuario();
-////        return ResponseEntity.ok(usuarios);
-////    }
+    @GetMapping(value = "/buscar")
+    public List<Usuario> find(){
+        return useCase.findUsuario();
+    }
 
-//    @PutMapping
-//    public ResponseEntity<Usuario> update(@RequestBody Usuario usuario){
-//        return ResponseEntity.ok(useCase.updateUsuario(usuario));
-//    }
-
+    @PutMapping(value = "/atualizar")
+    public ResponseEntity<Usuario> update(@RequestBody UsuarioDTO usuarioDTO){
+        return ResponseEntity.ok(useCase.updateUsuario(usuarioDTO));
+}
 
 }
